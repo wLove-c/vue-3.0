@@ -7,13 +7,16 @@ function observer(data){
   for(let key in data){
     defineReactive(data,key,data[key]);
   }
+ 
 }
 function defineReactive(data,key,value){
+  observer(value); // 递归 继续对当前value进行拦截
+
   //Object.defineProperty直接在对象上定义新属性，或修改对象上的现有属性，然后返回对象。
   //不了解的请转MDN文档 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
   Object.defineProperty(data, key, {
       get(){
-          console.log('获取了值')
+          console.log('获取了值') // 在此做依赖收集的操作
           return value 
       },
       set(newValue){
