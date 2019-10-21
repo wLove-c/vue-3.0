@@ -1,5 +1,3 @@
-let defalutName = ''
-let data = {name:''};
 
 function observer(data){
   // 判断是否为对象 如果不是则直接返回，Object.defineProperty是对象上的属性
@@ -15,22 +13,33 @@ function defineReactive(data,key,value){
   //不了解的请转MDN文档 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
   Object.defineProperty(data, key, {
       get(){
+          console.log('获取了值')
           return value 
       },
       set(newValue){
           if(newValue !== value){
+              // 对于新增的值也需要监听
+              observer(newValue)
+              console.log('设置了值')
               value = newValue
           }
       }
   });
 }
-// 
+
+function reactiveSet (data,key,value) {
+  data[key] = value
+  observer(data)
+}
+
+
+let data = {name:'',age:18};
 observer(data)
-console.log('data.name==',data.name);
-// expected output: ''
 
 // 给data里面的name赋值 = "Eno"
-data.name = 'Eno'
-console.log(data.name);   // expected output: Eno
-
-console.log(defalutName); // expected output: Eno
+// data.name = 'Eno'
+// console.log(data.name);  
+//  data.age = 12
+//  console.log(data.age); 
+reactiveSet(data,'gender','男')
+console.log(data.gender)
