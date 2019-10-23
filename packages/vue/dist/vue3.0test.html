@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="vue.global.js"></script>
+  <script>
+    console.log('Vue====',Vue)
+    const App = {
+        setup() {
+          // reactive state
+          let count =  Vue.reactive({value:1}) // 知乎上尤大大推荐的是使用 const count = value(0) 但目前这个版本是没有value的 先用reactive做响应
+          // computed state
+          const plusOne = Vue.computed(() => count.value * 2)
+          // method
+          const increment = () => {
+             count.value++ 
+
+            }
+          // watch
+          Vue.watch(() => count.value * 2, val => {
+            console.log(`value * 2 is ${val}`)
+          })
+          // lifecycle
+          Vue.onMounted(() => {
+            console.log(`mounted`)
+          })
+          // expose bindings on render context
+          return {
+            count,
+            plusOne,
+            increment
+          }
+        },
+        template: `
+          <div>
+            <div>count is {{ count.value }}</div>
+            <span>plusOne is {{ plusOne }}</span>
+            <button @click="increment">count++</button>
+          </div>
+        `,
+      }
+    Vue.createApp().mount(App,app)
+  </script>
+</body>
+</html>
