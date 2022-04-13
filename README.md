@@ -433,6 +433,7 @@ observer(data)
 // reactiveSet(data,'gender','男')
 // console.log(data.gender)
 // console.log(data.attr)
+
 data.attr.push(10000); 
 data.attr.splice(0,1); 
 
@@ -452,6 +453,7 @@ data.attr.splice(0,1);
 
 
 ### vue3.0使用小测
+
 ```
 <!DOCTYPE html>
 <html lang="en">
